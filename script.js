@@ -2,18 +2,19 @@ const form = document.querySelector("#new-item-form");
 const formSubmitBtn = document.querySelector("#new-item-submit");
 const input = document.querySelector("#new-item-input");
 const itemsList = document.querySelector(".items-list");
-const listItem = document.querySelector(".list-item");
-const itemText = document.querySelector(".item-text");
-const deleteBtn = document.querySelector(".delete-button");
+const listItem = document.querySelectorAll(".list-item");
+const itemText = document.querySelectorAll(".item-text");
+const allItems = [];
 
 // Add the new item to the DOM (without .innerHTML)
 function createItem() {
-  const newItem = input.value;
+  const uniqueId = crypto.randomUUID().toString();
+  const newItem = {
+    id: uniqueId,
+    text: input.value,
+  };
 
-  if (!newItem || newItem === "") {
-    alert("Please enter a valid input.");
-    return;
-  }
+  allItems.push(newItem);
 
   const newListItem = document.createElement("li");
   newListItem.classList.add("list-item");
@@ -22,66 +23,76 @@ function createItem() {
   const itemTextInput = document.createElement("input");
   itemTextInput.type = "text";
   itemTextInput.classList.add("item-text");
-  itemTextInput.value = newItem;
-  itemTextInput.setAttribute("readonly", "readonly");
+  itemTextInput.setAttribute("id", uniqueId);
+  itemTextInput.value = newItem.text;
+  itemTextInput.setAttribute("contentEditable", "true");
   newListItem.appendChild(itemTextInput);
-
-  const itemButtonsContainer = document.createElement("div");
-  itemButtonsContainer.classList.add("buttons");
-  newListItem.appendChild(itemButtonsContainer);
-
-  const editButton = document.createElement("button");
-  editButton.classList.add("edit-button");
-  editButton.textContent = "Edit";
-  itemButtonsContainer.appendChild(editButton);
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-button");
   deleteButton.textContent = "Delete";
-  itemButtonsContainer.appendChild(deleteButton);
+  newListItem.appendChild(deleteButton);
+
+  saveLocalStorage();
 }
 
-// Local storage
+// Clear the input field
+function clearInput() {
+  input.value = "";
+}
+
+//------------------Local storage-------------------//
+// Load local storage
 function getLocalStorage() {
-  let data = JSON.parse(localStorage.getItem("items")) || [];
+  const data = JSON.parse(localStorage.getItem("items")) || [];
+
   if (data) {
     for (item of data) {
-      input.value = item;
+      input.value = item.text;
       createItem();
     }
     clearInput();
   }
 }
 
+// Save to local storage
 function saveLocalStorage() {
-  let items = [];
-  let itemInputs = document.querySelectorAll(".item-text");
-  for (item of itemInputs) {
-    items.push(item.value);
-  }
-  let data = JSON.stringify(items);
-  localStorage.setItem("items", data);
+  localStorage.setItem("items", JSON.stringify(allItems));
 }
 
-// Clear the input
-function clearInput() {
-  input.value = "";
-}
+// Remove items from dom and local storage
+itemsList.addEventListener("click", (e) => {
+  const data = JSON.parse(localStorage.getItem("items")) || [];
+
+  const target = e.target;
+  const listItem = e.target.closest("li");
+  const input = listItem.querySelector(".item-text");
+  const inputId = input.getAttribute("id").toString();
+
+  if (target.classList.contains("delete-button")) {
+    const newArray = data.filter((currentItem) => inputId != currentItem.id);
+    listItem.remove();
+    localStorage.setItem("items", JSON.stringify(newArray));
+  }
+});
 
 // ----------EVENT LISTENERS---------
 
-// On page load, retrieve items from local storage, and clear the input field
+// Retrieve items from local storage & clear the input field
 document.addEventListener("DOMContentLoaded", () => {
+  allItems.length = 0; // Clear the array before populating it
   getLocalStorage();
   clearInput();
 });
 
-// On form submit, add new item, save the item to local storage, and clear the input field
+// Add new item, save the item to local storage, & clear the input field
 form.addEventListener("submit", (e) => {
+  if (!input.value || input.value === "") {
+    alert("Please enter a valid input.");
+    return;
+  }
+
   e.preventDefault();
   createItem();
-  saveLocalStorage();
   clearInput();
 });
-
-itemsList.addEventListener("click", (e) => {});
