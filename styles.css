@@ -10,12 +10,12 @@
   --dark: #4a4a4a;
   --darker: #2f2f2f;
   --darkest: #1d1d1d;
-  --gray: #818181;
-  --text: whitesmoke;
+  --gray: #8181816b;
+  --text: #f5f5f5;
 }
 
 body {
-  background-color: var(--darkest);
+  background-color: var(--darker);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@ body {
 header {
   margin: 1rem;
   text-align: center;
-  width: 80%;
+  width: 100%;
 }
 
 h1 {
@@ -36,14 +36,22 @@ h1 {
 .form-flex {
   margin: 3rem auto;
   display: flex;
-  max-width: 65%;
+  max-width: 80%;
 }
 
 .new-item-form {
   margin: 2rem auto;
 }
 
+form input {
+  color: var(--text);
+  background-color: var(--darkest);
+  padding: 0.75rem;
+  border-radius: 5px;
+}
+
 input {
+  font-size: 1rem;
   flex-grow: 1;
   margin-right: 1rem;
   color: var(--text);
@@ -52,27 +60,36 @@ input {
 }
 
 button {
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  margin: 0.2rem;
+  margin-left: 1rem;
   background: transparent;
   color: var(--text);
   border: none;
 }
 
 main {
-  width: 75%;
+  width: 90%;
 }
 
-.items-list {
-  margin: 0 auto;
-  max-width: 100%;
-}
-
-.items-list li {
+.list-item {
   color: var(--text);
   border-radius: 5px;
   padding: 0.9rem;
-  background-color: var(--gray);
+  background-color: var(--dark);
   display: flex;
   justify-content: space-between;
+  margin: 1rem auto;
+}
+
+.delete-button {
+  color: rgb(255, 0, 51);
+}
+
+@media (min-width: 900px) {
+  header,
+  main {
+    max-width: 60%;
+  }
 }
