@@ -6,10 +6,6 @@ const listItem = document.querySelector(".list-item");
 const itemText = document.querySelector(".item-text");
 const deleteBtn = document.querySelector(".delete-button");
 
-function clearInput() {
-  input.value = "";
-}
-
 // Add the new item to the DOM (without .innerHTML)
 function createItem() {
   const newItem = input.value;
@@ -45,10 +41,38 @@ function createItem() {
   itemButtonsContainer.appendChild(deleteButton);
 }
 
+// Local storage
+function getLocalStorage() {
+  let data = JSON.parse(localStorage.getItem("items")) || [];
+  if (data) {
+    for (item of data) {
+      input.value = item;
+      createItem();
+    }
+    clearInput();
+  }
+}
+
+function saveLocalStorage() {
+  let items = [];
+  let itemInputs = document.querySelectorAll(".item-text");
+  for (item of itemInputs) {
+    items.push(item.value);
+  }
+  let data = JSON.stringify(items);
+  localStorage.setItem("items", data);
+}
+
+// Clear the input
+function clearInput() {
+  input.value = "";
+}
+
 // ----------EVENT LISTENERS---------
 
 // On page load, retrieve items from local storage, and clear the input field
 document.addEventListener("DOMContentLoaded", () => {
+  getLocalStorage();
   clearInput();
 });
 
@@ -56,5 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   createItem();
+  saveLocalStorage();
   clearInput();
 });
+
+itemsList.addEventListener("click", (e) => {});
