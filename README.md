@@ -1,6 +1,6 @@
 # Shopping List App
 
-A simple shopping list app with CRUD functionality that utilizes local storage for data persistence.
+A shopping list app that utilizes local storage for data persistence.
 
 🔗 **Live site:** [here](https://jacobrobertsdev.github.io/shopping-list/)
 
