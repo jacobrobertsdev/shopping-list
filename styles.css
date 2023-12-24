@@ -25,12 +25,11 @@ body {
 header {
   margin: 1rem auto 0 auto;
   text-align: center;
-  width: 100%;
 }
 
 header img {
-  display: inline-block;
-  max-width: 2rem;
+  max-width: 1.5rem;
+  margin-right: 0.5rem;
 }
 
 h1 {
@@ -41,9 +40,8 @@ h1 {
 }
 
 .form-flex {
-  margin: 3rem auto;
+  margin: 2rem auto;
   display: flex;
-  max-width: 80%;
 }
 
 .new-item-form {
@@ -57,10 +55,6 @@ form input {
   border: 2px solid var(--gray);
   border-radius: 5px;
   margin: 0 1.5rem;
-}
-
-main {
-  width: 90%;
 }
 
 .list-item {
@@ -114,6 +108,6 @@ button:active {
 @media (min-width: 900px) {
   header,
   main {
-    max-width: 40%;
+    width: 50%;
   }
 }
