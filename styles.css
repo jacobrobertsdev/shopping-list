@@ -8,14 +8,14 @@
 
 :root {
   --dark: #4a4a4a;
-  --darker: #2f2f2f;
-  --darkest: #1d1d1d;
+  --darkest: #121212;
   --gray: #8181816b;
   --text: #f5f5f5;
+  --font: "Comfortaa", sans-serif;
 }
 
 body {
-  background-color: var(--darker);
+  background-color: var(--darkest);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,14 +23,21 @@ body {
 }
 
 header {
-  margin: 1rem;
+  margin: 1rem auto 0 auto;
   text-align: center;
   width: 100%;
 }
 
+header img {
+  display: inline-block;
+  max-width: 2rem;
+}
+
 h1 {
+  font-family: var(--font);
   color: var(--text);
   margin: 3rem auto;
+  font-weight: 700;
 }
 
 .form-flex {
@@ -47,26 +54,9 @@ form input {
   color: var(--text);
   background-color: var(--darkest);
   padding: 0.75rem;
+  border: 2px solid var(--gray);
   border-radius: 5px;
-}
-
-input {
-  font-size: 1rem;
-  flex-grow: 1;
-  margin-right: 1rem;
-  color: var(--text);
-  background: none;
-  border: none;
-}
-
-button {
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 1rem;
-  background: transparent;
-  color: var(--text);
-  border: none;
+  margin: 0 1.5rem;
 }
 
 main {
@@ -76,20 +66,54 @@ main {
 .list-item {
   color: var(--text);
   border-radius: 5px;
-  padding: 0.9rem;
+  padding: 1rem;
   background-color: var(--dark);
   display: flex;
   justify-content: space-between;
   margin: 1rem auto;
 }
 
-.delete-button {
-  color: rgb(255, 0, 51);
+input[type="checkbox"] {
+  width: 1rem;
+}
+
+input[type="checkbox"]:checked + input[type="text"] {
+  text-decoration: line-through;
+}
+
+form input,
+.item-text {
+  font-weight: 500;
+  font-size: 1rem;
+  flex-grow: 1;
+  margin: 0 1rem;
+  color: var(--text);
+  background: none;
+}
+
+li input[type="text"] {
+  pointer-events: none;
+  border: none;
+}
+button {
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+button:hover,
+button:active {
+  opacity: 0.8;
 }
 
 @media (min-width: 900px) {
   header,
   main {
-    max-width: 60%;
+    max-width: 40%;
   }
 }

@@ -20,12 +20,17 @@ function createItem() {
   newListItem.classList.add("list-item");
   itemsList.appendChild(newListItem);
 
+  const itemCheckbox = document.createElement("input");
+  itemCheckbox.type = "checkbox";
+  itemCheckbox.classList.add("checkbox");
+  newListItem.appendChild(itemCheckbox);
+
   const itemTextInput = document.createElement("input");
   itemTextInput.type = "text";
   itemTextInput.classList.add("item-text");
   itemTextInput.setAttribute("id", uniqueId);
   itemTextInput.value = newItem.text;
-  itemTextInput.setAttribute("contentEditable", "true");
+  itemTextInput.setAttribute("readonly", "readonly");
   newListItem.appendChild(itemTextInput);
 
   const deleteButton = document.createElement("button");
